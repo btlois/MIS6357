@@ -1,0 +1,84 @@
+\documentclass[12pt,addpoints,answers]{exam}%,answers
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\pagestyle{headandfoot}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+% Go to the following URL for the manual for the exam class:
+% http://www-math.mit.edu/~psh/exam/examdoc.pdf
+
+\begin{document}
+\firstpageheader{ MIS 6357 }{\bf\large Homework 1}{Due: Friday, January 20, 2016}
+\runningfooter{}{}{}
+\begin{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%vvv
+%\makebox[\textwidth]{Name:\enspace\hrulefill}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%^^^
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%vvv
+
+
+
+\begin{questions}
+
+\question Functions and loops.
+\begin{parts}
+	\part \label{is_prime} Write a function to test whether an integer \code{a} is prime. Recall (or be surprised to learn!) that 1 is not a prime.
+	\part \label{n} Using your function from \eqref{is_prime} write a second function that takes an input \code{n} and returns the $n^{\mathrm{th}}$ prime number.
+	\part Use the \code{sapply} function and your function from \eqref{n} to print the first 20 prime numbers.
+\end{parts}
+
+\question Consider the following vector:
+
+\code{x <- c(91, NA, 90, 7, 67, NA, 87, 36, 2, 93, 27, 16)}.
+
+Using only one line of code each, perform the following operations:
+\begin{parts}
+	\part Remove the \code{NA} values from \code{x}.
+	\part Print the first, third, and eighth elements of \code{x}.
+	\part Print the elements of \code{x} that are greater than 50.
+	\part Print the odd elements of \code{x}.
+\end{parts}
+
+\question The \code{mtcars} dataset is included with R.  Use \code{?mtcars} to learn about the data.
+\begin{parts}
+	\part Use \code{ggplot} to make a scatter plot of fuel efficiency and engine size.
+	\part Add a horizontal line to the plot at the median of the y values.
+	\part Add a vertical line to the plot at the median of the x values.
+	\part Make a box plot of $\frac{1}{4}$ mile time vs number of engine cylinders.
+		Describe what each aspect of your plot represents.  i.e. What do the lines, box widths, whiskers, etc. represent?
+\end{parts}
+
+\question Recall the trade-off between prediction and interpretation.
+\begin{parts}
+	\part \label{pred} Describe a situation where prediction would be more important than interpretation.
+	\part Describe a second situation where interpretation is relatively more important than in your answer to (\ref{pred}).
+\end{parts}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{questions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%^^^
+
+\end{document} 
