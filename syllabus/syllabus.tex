@@ -5,7 +5,7 @@
 
 % Document settings
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
+\usepackage[left=0.4in,top=0.2in,right=0.4in,bottom=0.2in]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage{multirow}
 \usepackage{setspace}
@@ -24,10 +24,10 @@
 
 % Professor information
 \begin{tabular}{ l l }
- % \multirow{6}{*}{\includegraphics[height=1.25in,width=1in]{pic_blank.png}} 
- & \large Brian Lois \\\\
+ 
+ & \large \textbf{Instructor:} Brian Lois \\
   & \large bxl171630@utdallas.edu \\
-  & \large Office Location \\
+  & \large Office Location: To be determined \\
   & \large Office Hours: After class \\
 \end{tabular}
 \vspace{5mm}
@@ -35,14 +35,14 @@
 %\end{center}
 
 % Course details
-\textbf {\large \\ Course Description:} Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. Place the course description here. \\
+\textbf {\large \\ Course Description:} This course is based on the open-source R software. Topics include data manipulation, imputation, variable selection, as well as advanced analytic methods \\
 \textbf {Prerequisite:} MIS 6356
 
 \textbf {Credit Hours:} 3 \\
 
-\textbf {\large Text(s):} \emph{Applied Predictive Modeling}
+\textbf {\large Text:} \emph{Applied Predictive Modeling}
 
-\textbf {Author(s):} Max Kuhn and Kjell Johnson;  \textbf {ISBN:} 978-1-4614-6848-6 \\
+\textbf {Authors:} Max Kuhn and Kjell Johnson;  \textbf {ISBN:} 978-1-4614-6848-6 \\
 
 
 % I recommend using \newpage here if necessary
@@ -52,7 +52,7 @@
 Homework & 30\% \\
 Quizzes  & 10\% \\
 Exam 1 & 20\% \\
-Exam 2 20\% \\
+Exam 2 & 20\% \\
 Final Project  & 20\% \\
 \end{tabular} \\\\
 
@@ -62,19 +62,20 @@ Final Project  & 20\% \\
 \begin{itemize}
 	\item \textbf {General}
 		\begin{itemize}
-			\item Computers are not to be used unless instructed to do so.
 			\item Quizzes and exams are closed book, closed notes.
 			\item \textbf {No makeup quizzes or exams will be given.}
 		\end{itemize}
-	\item \textbf {Labs and Assignments}
+	\item \textbf {Assignments}
 		\begin{itemize}
-			\item Students are expected to work independently. \textbf{Offering} and \textbf{accepting} solutions from others is an act of \textbf{plagiarism}, which is a serious offense and \textbf{all involved parties will be penalized according to the Academic Honesty Policy}. Discussion amongst students is encouraged, but when in doubt, direct your questions to the professor, tutor, or lab assistant.
+			\item Students are expected to work independently. \textbf{Offering} and \textbf{accepting} solutions from others is an act of \textbf{academic dishonesty}, which is a serious offense and \textbf{all involved parties will be penalized according to the Academic Honesty Policy}. Discussion amongst students is encouraged, but no written notes may be retained from those discussions.
+			\item You are allowed to search the internet, but my \textbf{never} copy any code.  Your solution should be written while not looking at others' code.
+			\item Posting homework related questions to websites such as stackoverflow is prohibited.
 			\item \textbf{No late assignments will be accepted}.
 		\end{itemize}
 	\item \textbf{Attendance and Absences}
 		\begin{itemize}
 			\item Attendance is expected.
-			\item You are responsible for any announcements
+			\item You are responsible for any announcements made in class.
 		\end{itemize}
 \end{itemize}
 
@@ -82,7 +83,7 @@ Final Project  & 20\% \\
 
 
 
-
+\newpage
 % Course Outline
 \textbf {\large Tentative Course Outline}:
 
@@ -107,6 +108,10 @@ Week 2 & \begin{minipage}{.85\textwidth}
 	\vspace{1mm}
 	\item Introduction to modeling
 	\item Data pre-processing
+	\begin{itemize}
+		\item Principal Components Analysis
+		\item Missing value imputation
+	\end{itemize}
 	\item Reading assignment: Ch. 2-3
 	\vspace{1mm}
 \end{itemize}
@@ -116,6 +121,11 @@ Week 3 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Over fitting and tuning
+		\begin{itemize}
+		\item K-fold cross validation
+		\item Bootstrapping
+		\item Grid searching
+	\end{itemize}
 	\item Reading assignment: Ch. 4
 	\vspace{1mm}
 \end{itemize}
@@ -125,6 +135,11 @@ Week 4 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Measuring model performance
+		\begin{itemize}
+		\item RMSE, $R^2$
+		\item Bias variance trade-off
+		\item Sensitivity, Specificity, ROC curves and AUC
+	\end{itemize}
 	\item Reading assignment: Ch. 5 and 11
 	\vspace{1mm}
 \end{itemize}
@@ -134,6 +149,11 @@ Weeks 5-6 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Linear models
+	\begin{itemize}
+		\item Linear regression, logistic regression
+		\item Penalized regression: ridge regression, lasso
+		\item Partial least squares
+	\end{itemize}
 	\item Reading assignment: Ch. 6 and 12
 	\vspace{1mm}
 \end{itemize}
@@ -143,6 +163,12 @@ Weeks 7-9 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Non-linear models
+	\begin{itemize}
+		\item Neural networks
+		\item Multivariate Adaptive Regression Splines
+		\item Support vector machines
+		\item K-nearest neighbor
+	\end{itemize}
 	\item Reading assignment: Ch. 7 and 13
 	\vspace{1mm}
 \end{itemize}
@@ -152,6 +178,10 @@ Weeks 10-11 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Tree based models
+	\begin{itemize}
+		\item Random forests
+		\item Gradient Boosting Machines (XGBoost)
+	\end{itemize}
 	\item Reading assignment: Ch. 8 and 14
 	\vspace{1mm}
 \end{itemize}
@@ -170,6 +200,9 @@ Week 13 & \begin{minipage}{.85\textwidth}
 \begin{itemize} \itemsep-0.4em
 	\vspace{1mm}
 	\item Feature Importance and Selection
+	\begin{itemize}
+		\item Recursive feature elimination
+	\end{itemize}
 	\item Reading assignment: Chs. 18 and 19
 	\vspace{1mm}
 \end{itemize}
