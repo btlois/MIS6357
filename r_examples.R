@@ -1,14 +1,15 @@
 #Center Scale
 x <- c(1,2,3,4,5,6,7,8,9,10)
 x_cs <- scale(x, center = TRUE, scale = TRUE)
+x_cs <- scale(x)
 print(x_cs)
 attributes(x_cs)
-attr(x, 'dim')
-attr(x, 'scaled:center')
-attr(x, 'scaled:scale')
-attr(x, 'col_name') <- 'sample'
+attr(x_cs, 'dim')
+attr(x_cs, 'scaled:center')
+attr(x_cs, 'scaled:scale')
+attr(x_cs, 'col_name') <- 'sample'
 
-#Box Coc
+#Box Cox
 # install.packages('caret')
 # install.packages('e1071')
 library(caret)
