@@ -28,11 +28,22 @@ x[['size_int']] <- map[x$size]
 #Data splitting
 data(twoClassData)
 
+
+
 head(predictors)
 table(classes)
 n <- length(classes)
 
+ggplot(data=predictors) + geom_point(mapping=aes(x=PredictorA, y=PredictorB))
+pc <- prcomp(predictors)
+
+
 training_indices <- createDataPartition(classes, p = .8, list = FALSE)
+ggplot(data=as.data.frame(pc$x)) + geom_point(mapping=aes(x=PC1, y=PC2))
+
+scaled_stdev <- as.data.frame(cbind(pc$sdev / sum(pc$sdev), 1:length(pc$sdev)))
+colnames(scaled_stdev) <- c('frac_variance', 'num_pcs')
+ggplot(data=scaled_stdev) + geom_point(mapping=aes(x=num_pcs, y=frac_variance))
 
 # Be careful  predictors[training_indices]
 train_predictors <- predictors[training_indices,]
@@ -48,6 +59,7 @@ createFolds(classes, k = 10, list = TRUE, returnTrain = TRUE)
 bootstrap <- createResample(classes, times = 2)
 classes[bootstrap$Resample1]
 classes[-bootstrap$Resample1]
+
 
 
 
