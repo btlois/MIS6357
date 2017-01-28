@@ -1,0 +1,31 @@
+---
+title: "Homework 3"
+author: "Brian Lois"
+date: "1/28/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1.
+Problem 4.3 in the text.
+
+## 2.
+Problem 4.4 in the text.
+When `y` is numeric, what argument to `createDataPartition` controls how the stratified sample is generated?
+Explain how this works.
+
+## 3.
+Using the `Glass` dataset from the previous homework, perform each of the following resampling techniques.  Start each part (a,b,c) from the full dataset (i.e. these are separate, not sequential questions).
+
+a). Split the data using a simple test/train split.
+
+b). Split the data using 3-fold cross validation.
+
+c). Split the data using bootstrapping.
+
+For each split, use `head()` to print the first few rows of the training set and the test set.
+In total you should have printed 10 data sets.
+
