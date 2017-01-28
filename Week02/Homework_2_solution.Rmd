@@ -1,0 +1,171 @@
+---
+title: "Homework 2 Solution"
+author: "Brian Lois"
+date: "1/27/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r, message = FALSE, warning = FALSE}
+library(ggplot2)
+library(caret)
+library(mlbench)
+library(corrplot)
+```
+
+## 1. 
+
+```{r}
+RMSE <- function(y, y_hat){
+  sq_er <- (y - y_hat)^2
+  mean_sq_er <- mean(sq_er)
+  rmse <- sqrt(mean_sq_er)
+  return(rmse)
+}
+```
+
+## 2.
+```{r}
+data(Glass)
+```
+
+### a) 
+Look at all histograms
+```{r, echo = TRUE, eval = FALSE}
+for (col in colnames(Glass)){
+  print(ggplot(data = Glass) + geom_histogram(mapping = aes_string(x = col)))
+}
+```
+
+Only plot 2 (any two interesting ones are correct).
+```{r, message = FALSE}
+ggplot(data = Glass) + geom_histogram(mapping = aes(x = Al))
+ggplot(data = Glass) + geom_histogram(mapping = aes(x = Mg))
+```
+
+Correlation matrix:
+```{r}
+correlation_matrix <- cor(subset(Glass, select = -c(Type)))
+corrplot(correlation_matrix)
+```
+
+
+### b)
+```{r}
+skewness_list <- apply(Glass[,1:9], 2, BoxCoxTrans)
+for (col in colnames(Glass)[1:9]){
+  print(paste(col, skewness_list[[col]]$skewness))
+}
+```
+
+### c)
+We will do the Box-Cox transformation on `Ca`.
+```{r, message=FALSE}
+ggplot(data = Glass) + geom_histogram(mapping = aes(x = Ca))
+Glass['transformed_Ca'] <- predict(skewness_list$Ca, Glass$Ca)
+ggplot(data = Glass) + geom_histogram(mapping = aes(x = transformed_Ca))
+```
+
+## 3.
+### a)
+```{r}
+data("Soybean")
+P <- ncol(Soybean)
+n <- nrow(Soybean)
+degenerate <- function(dist){
+  frac_unique <- length(dist) / sum(dist)
+  ratio <- sort(dist, decreasing = TRUE)[1] / sort(dist, decreasing = TRUE)[2]
+  if ((frac_unique < .1) & (ratio > 20)){
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
+var_tables <- apply(Soybean, 2, table)
+degenerate_features <- sapply(var_tables, degenerate)
+
+Soybean <- Soybean[ ,!degenerate_features]
+P <- ncol(Soybean)
+```
+
+### b)
+```{r} 
+percent_missing <- function(x){
+  p_m <- sum(is.na(x)) / length(x)
+  return(p_m)
+}
+```
+
+Percent missing by feature:
+
+```{r}
+apply(Soybean, 2, percent_missing)
+```
+
+Yes, some features are much more likely to be missing.
+
+Percent missing by class and feature:
+(Output is suppressed to save space)
+```{r, eval=FALSE}
+missing_mat <- list()
+for (level in levels(Soybean$Class)){
+  for (col in colnames(Soybean)[2:P]){
+    vec <- Soybean[[col]][Soybean$Class == level]
+    missing_mat[[level]][[col]] <- percent_missing(vec)
+  }
+}
+print(missing_mat)
+```
+
+Many classes have no missing values, and some classes have a lot of missing values.  Some classes may even have all of the features missing.
+
+### c)
+Possible strategies could include any combination of:
+
+* Removing whole classes such as `herbicide-injury` and `cyst-nematode`.
+* Mean, median, or knn imputation
+* I don't see any columns that _I_ would entirely remove based on missingness, but I won't take off points for removing features with more than 10% missing.
+* Adding missing indicator columns.
+
+The best approach here is unclear without knowing the ultimate goal of the project.
+
+## 4.
+### a)
+```{r}
+data(BloodBrain)
+```
+### b)
+Reuse our function from before
+```{r}
+bbb_var_tables <- apply(bbbDescr, 2, table)
+degenerate_vec <- sapply(bbb_var_tables, degenerate)
+sum(degenerate_vec)
+var_vec <- apply(bbbDescr, 2, var)
+head(sort(var_vec), 10)
+```
+
+None are degenerate as defined in the chapter, but some have **very** near-zero variance.
+
+### c)
+```{r}
+cor_mat <- cor(bbbDescr)
+corrplot(cor_mat)
+```
+
+Yes, there do appear to be strong relationships (dark colors in the corrplot).
+
+```{r}
+pc <- prcomp(bbbDescr)
+scaled_stdev <- as.data.frame(cbind(pc$sdev / sum(pc$sdev), 1:length(pc$sdev)))
+colnames(scaled_stdev) <- c('frac_variance', 'number_of_pcs')
+ggplot(data=scaled_stdev) + geom_point(mapping=aes(x=number_of_pcs, y=frac_variance))
+```
+
+Based on this, I would keep 5 or 6 principal components.
+
+
+
+

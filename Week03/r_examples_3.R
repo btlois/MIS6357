@@ -28,8 +28,6 @@ x[['size_int']] <- map[x$size]
 #Data splitting
 data(twoClassData)
 
-
-
 head(predictors)
 table(classes)
 n <- length(classes)
@@ -56,10 +54,20 @@ createFolds(classes, k = 10, list = FALSE)
 createFolds(classes, k = 10, list = TRUE)
 createFolds(classes, k = 10, list = TRUE, returnTrain = TRUE)
 
+repeated_k_fold = list()
+for (i in 1:5){
+  repeated_k_fold[[i]] <- createFolds(classes, k = 10, list = TRUE)
+}
+
+
 bootstrap <- createResample(classes, times = 2)
 classes[bootstrap$Resample1]
-classes[-bootstrap$Resample1]
 
+classes[-bootstrap$Resample1]
+#OR
+in_sample <- 1:n %in% bootstrap$Resample1
+not_in_sample <- !(in_sample)
+indices_not_in_sample <- seq(n)[not_in_sample]
 
 
 
