@@ -1,6 +1,6 @@
 library(AppliedPredictiveModeling)
 library(caret)
-library(plyr)
+
 
 x <- as.data.frame(array(c('red','red','blue', 'red', 'blue', 'blue','small','large','med', 'med', 'med', 'large'), dim = c(6,2)))
 colnames(x) <- c('color', 'size')

@@ -143,11 +143,13 @@ Reuse our function from before
 bbb_var_tables <- apply(bbbDescr, 2, table)
 degenerate_vec <- sapply(bbb_var_tables, degenerate)
 sum(degenerate_vec)
+degenerate_vec[degenerate_vec]
+
 var_vec <- apply(bbbDescr, 2, var)
 head(sort(var_vec), 10)
 ```
 
-None are degenerate as defined in the chapter, but some have **very** near-zero variance.
+Seven are degenerate as defined in the chapter, and some others have **very** near-zero variance.
 
 ### c)
 ```{r}

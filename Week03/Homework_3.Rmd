@@ -13,7 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 Problem 4.3 in the text.
 
 ## 2.
-Problem 4.4 in the text.
+Problem 4.4 in the text (skip (d)).
+
 When `y` is numeric, what argument to `createDataPartition` controls how the stratified sample is generated?
 Explain how this works.
 
