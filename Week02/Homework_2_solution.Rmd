@@ -74,8 +74,16 @@ ggplot(data = Glass) + geom_histogram(mapping = aes(x = transformed_Ca))
 data("Soybean")
 P <- ncol(Soybean)
 n <- nrow(Soybean)
+
+
+
 degenerate <- function(dist){
   frac_unique <- length(dist) / sum(dist)
+  
+  largest <- sort(dist, decreasing = TRUE)[1]
+  sec_largest <- sort(dist, decreasing = TRUE)[2]
+  ratio <- largest / sec_largest
+  
   ratio <- sort(dist, decreasing = TRUE)[1] / sort(dist, decreasing = TRUE)[2]
   if ((frac_unique < .1) & (ratio > 20)){
     return(TRUE)

@@ -1,0 +1,116 @@
+---
+title: "Homework 3 Solutions"
+author: "Brian Lois"
+date: "2/4/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(AppliedPredictiveModeling)
+library(caret)
+library(mlbench)
+```
+
+## 1.
+
+### a)
+
+The maximum $R^2$ value is 0.545 with a standard error of .0308.  Using the one standard error method, 0.545 - .0308 = `r 0.545 - .0308`.  The least number of components with $R^2 >$ `r .545 - .0308` is 3.
+
+### b)
+
+The tolerance values can be computed as
+```{r}
+R2 <- c(.444, .5, .533, .545, .542, .537, .534, .534, .520, .507)
+( tolerances <-  1 - (R2 / max(R2)) )
+```
+The best choice is then
+```{r}
+min(which(tolerances <= .1))
+```
+
+### c)
+To maximize $R^2$, choose the random forest model.
+
+### d)
+If time is also a consideration, support vector machine or boosted linear regression would be good options.
+
+## 2.
+
+### a)
+```{r}
+data(oil)
+original_distribution <- table(oilType) / length(oilType)
+random_sample <- sample(oilType, 60)
+sampled_distribution <- table(random_sample) / length(random_sample)
+(sampled_distribution - original_distribution) / original_distribution
+```
+In category C the two distributions differ by 100%.  The next highest is category E with a 27% difference.  (Your values may differ due to randomness.)  The problem is more pronounced for the smaller categories.
+
+### b)
+Doing a stratefied sample
+```{r}
+frac_to_keep <- 60 / length(oilType)
+random_sample_indices <- createDataPartition(oilType, p = frac_to_keep)
+random_sample <- oilType[random_sample_indices$Resample1]
+sampled_distribution <- table(random_sample) / length(random_sample)
+(sampled_distribution - original_distribution) / original_distribution
+```
+All categories except G are now within 10% of the original.
+
+```{r, eval=FALSE}
+?createDataPartition
+```
+When `y` is numeric, the argument `groups` controls the number of quantiles into which `y` is split for sampling.
+
+### c)
+For small sample sizes, repeated k-fold cross validation, or bootstrapping are good choices
+A test set is not a good use of samples for small datasets.
+
+## 3.
+
+### a)
+```{r}
+data(Glass)
+train_samples <- createDataPartition(Glass$Type, p = .8)
+
+train_data = Glass[train_samples$Resample1, ]
+head(train_data)
+
+test_data = Glass[-train_samples$Resample1, ]
+head(test_data)
+```
+
+### b)
+```{r}
+cv_samples = createFolds(Glass$Type, k = 3, list = FALSE)
+
+train_1 <- Glass[cv_samples %in% c(1,2), ]
+head(train_1)
+test_1 <- Glass[cv_samples == 3, ]
+head(test_1)
+
+train_2 <- Glass[cv_samples %in% c(1,3), ]
+head(train_2)
+test_2 <- Glass[cv_samples == 2, ]
+head(test_2)
+
+train_3 <- Glass[cv_samples %in% c(2,3), ]
+head(train_3)
+test_3 <- Glass[cv_samples == 1, ]
+head(test_3)
+```
+
+### c)
+```{r}
+bootstrap_samples <- createResample(Glass$Type, times = 1, list = FALSE)
+bootstrap_train <- Glass[bootstrap_samples, ]
+head(bootstrap_train)
+bootstrap_test <- Glass[-bootstrap_samples, ]
+head(bootstrap_test)
+```
+
+
+
+

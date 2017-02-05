@@ -32,7 +32,7 @@ sensitivity(data = test$class_pred,
 
 #another option
 library(ModelMetrics)
-tpr(test$class, test$p_preds, cutoff = .5)
+tpr(test$y, test$prob_pred, cutoff = .1)
 tnr(test$y, test$p_preds, cutoff = .5)
 
 #confusion matrix
@@ -47,7 +47,7 @@ caret::confusionMatrix(data = test$class_pred,
 library(pROC)
 
 rocCurve <- roc(response = test$class,
-                predictor = test$p_preds)
+                predictor = test$prob_pred)
 rocCurve_2 <- roc(response = test$class,
                   predictor = test$prob)
 
