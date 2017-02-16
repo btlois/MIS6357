@@ -1,0 +1,41 @@
+---
+title: "Homework 4"
+author: "Brian Lois"
+date: "2/13/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1
+For the following confusion matrix,
+```{r}
+matrix(c(30,15,10,40), 
+       nrow = 2, 
+       ncol = 2, 
+       dimnames = list(c('predicted positive', 'predicted negative'),
+                      c('actual positive', 'actual negative')))
+```
+calcualte
+
+a. Accuracy
+b. Sensitivity (true positive rate)
+c. Specifcity (true negative rate)
+d. Positive predictive value
+e. Negative predictive value
+
+## 2
+Let
+```{r}
+y_hat <- seq(.1, .7, by = .05)
+y <- c(0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1)
+```
+
+a. Plot the ROC curve.
+b. Find the area under the ROC curve.
+
+
+
+

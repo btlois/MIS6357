@@ -41,9 +41,9 @@ If time is also a consideration, support vector machine or boosted linear regres
 ### a)
 ```{r}
 data(oil)
-original_distribution <- table(oilType) / length(oilType)
+(original_distribution <- table(oilType) / length(oilType))
 random_sample <- sample(oilType, 60)
-sampled_distribution <- table(random_sample) / length(random_sample)
+(sampled_distribution <- table(random_sample) / length(random_sample))
 (sampled_distribution - original_distribution) / original_distribution
 ```
 In category C the two distributions differ by 100%.  The next highest is category E with a 27% difference.  (Your values may differ due to randomness.)  The problem is more pronounced for the smaller categories.
@@ -104,13 +104,14 @@ head(test_3)
 
 ### c)
 ```{r}
-bootstrap_samples <- createResample(Glass$Type, times = 1, list = FALSE)
+bootstrap_samples <- createResample(Glass$Type, times = 3, list = FALSE)
 bootstrap_train <- Glass[bootstrap_samples, ]
 head(bootstrap_train)
 bootstrap_test <- Glass[-bootstrap_samples, ]
 head(bootstrap_test)
 ```
 
-
+r-exercises.com
+Exercises that practice and extend skills with R
 
 
