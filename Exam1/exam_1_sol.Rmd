@@ -1,0 +1,109 @@
+---
+title: "Exam 1 Solution"
+author: "Brian Lois"
+date: "2/19/2017"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+library(penalized)
+library(data.table)
+set.seed(123)
+```
+
+Load data:
+```{r}
+exam_data <- read.csv('/Users/lvi819/Documents/MIS6357/Exam1/exam1.csv')
+head(exam_data)
+```
+
+Center and scale:
+```{r}
+for (col in colnames(exam_data)[1:14]){
+  exam_data[col] <- (exam_data[[col]] - mean(exam_data[[col]])) / (sd(exam_data[[col]]))
+}
+```
+
+Dummy variables:
+```{r}
+exam_data[['X15_T']] <- as.integer(exam_data[['X15']] == 'True')
+exam_data <- exam_data[ ,-15]
+```
+
+Test/train split:
+```{r}
+train_indices <- createDataPartition(exam_data$y, p = .8, list = FALSE)
+train_data <- exam_data[train_indices, ]
+test_data <- exam_data[-train_indices, ]
+nrow(train_data)
+nrow(test_data)
+```
+
+Cross validation:
+```{r}
+four_folds <- createFolds(train_data$y, k = 4, list = TRUE, returnTrain = TRUE)
+```
+Define RMSE:
+```{r}
+RMSE <- function(y, y_hat){
+  return(sqrt(mean((y - y_hat)^2)))
+}
+```
+
+
+Model fitting:
+```{r, results='hide'}
+lambda_2_range <- seq(0, 1, .1)
+tuning <- data.frame()
+for (i in 1:length(lambda_2_range)){
+  lam <- lambda_2_range[i]
+  for (j in 1:4){
+    model <- penalized(train_data[four_folds[[j]], 15],
+                       as.matrix(train_data[four_folds[[j]], -15]),
+                       lambda2 = lam,
+                       model = 'linear')
+    preds <- predict(model, as.matrix(train_data[-four_folds[[j]], -15]))
+    error <- RMSE(train_data[-four_folds[[j]], 15], preds[,1])
+    tuning[i,j] <- error
+  }
+}
+```
+
+
+Plot:
+```{r}
+tuning <- cbind(lambda_2_range, tuning)
+colnames(tuning) <- c('lambda_2', 'Fold 1 RMSE', 'Fold 2 RMSE', 'Fold 3 RMSE', 'Fold 4 RMSE')
+tuning$mean <- apply(tuning[ ,2:5], 1, mean)
+print(tuning)
+
+long_tuning <- melt(tuning, id.var='lambda_2')
+ggplot(data=long_tuning) + geom_boxplot(mapping = aes(x=lambda_2, y = value, group = lambda_2))
+ggplot(data=tuning) + geom_point(mapping = aes(x = lambda_2, y = mean))
+```
+
+The error appears to be increasing in $\lambda_2$, so I will choose $\lambda_2$ = 0 for the final model.
+
+Final model:
+```{r, results='hide'}
+final_model <- penalized(train_data$y,
+                           as.matrix(train_data[, -15]),
+                           lambda2 = 0,
+                           model = 'linear')
+```
+
+Test set evaluation:
+```{r}
+test_preds <- predict(final_model, as.matrix(test_data[,-15]))[,1]
+(test_rmse <- RMSE(test_data$y, test_preds))
+(test_R2 <- cor(test_preds, test_data$y))
+```
+
+
+
+
+
+
+

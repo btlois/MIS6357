@@ -12,7 +12,7 @@ summary(logistic_model)
 
 corrplot(cor(Xy))
 
-Xy <- Xy[ , !(colnames(Xy) %in% c('X3', 'X4', 'X12', 'X13', 'X14'))]
+Xy <- Xy[ , !(colnames(Xy) %in% c('X3', 'X4', 'X6', 'X12', 'X13', 'X14', 'X16'))]
 
 logistic_model <- glm(y ~ ., data=Xy, family=binomial())
 summary(logistic_model)
